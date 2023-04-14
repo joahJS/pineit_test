@@ -40,12 +40,12 @@
                     <div v-show="subitem.modals" data-pw-check-modal>
                         <div data-pw-check-body>
                             <p>비밀번호를 입력해주세요.</p>
-                            <p data-pw-check-incorrect v-if="pwAlert">비밀번호가 틀렸습니다. 비밀번호를 다시 확인해주세요.</p>
-                            <input type="text" ref="inputValue" :value="pwData" @input="pwData = $event.target.value">
+                            <p data-pw-check-incorrect v-if="pwAlert">비밀번호를 다시 확인해주세요.</p>
+                            <!-- <input type="text" ref="inputValue" :value="pwData" @input="pwData = $event.target.value"> -->
+                            <input type="password" ref="inputValue">
                             <div>
-                                <button type="button" @click="chkPw(subitem.number)">확인</button>
-                                <!-- <button type="button" @click="subitem.modals = !subitem.modals">닫기</button> -->
-                                <button type="button" @click="modalClose(subitem, subitem.modals)">닫기</button>
+                                <button type="button" @click="chkPw(subitem.number, subitem.modals)">확인</button>
+                                <button type="button" @click="[subitem.modals = !subitem.modals], [pwAlert = false], [inputValue.value = null]">닫기</button>
                             </div>
                         </div>
                     </div>
@@ -53,7 +53,6 @@
                 </div>
             </div>
             
-
         </div>
         
         <div class="list-btm-buttons"><!-- 목록 하단 버튼라인 -->
@@ -85,75 +84,35 @@
         </i>
     </div>
 
-
 </template>
 
 <script setup>
     import SubPageHero from '@/components/SubPageHero.vue'
     import router from '@/router';
 
+    //store에서 영역별 데이터 import
+    import { useDataRoomStore } from '@/stores/dataRoomSt'
+    import { storeToRefs } from 'pinia';
+
+    const dataRoomStore = useDataRoomStore()
+    const { listPreview } = storeToRefs(dataRoomStore)
+    
+
     let pwAlert = ref(false)
 
-    const listPreview = ref([
-        {
-            url: '/dataroom/',
-            children: [
-                
-                {
-                    number: 0,
-                    title:'고객용 원격지원 설치파일 다운로드',
-                    date:'2022.11.12',
-                    password: null,
-                    lock: false,
-                    modals: false
-                },
-                {
-                    number: 1,
-                    title:'더블스윗 APK파일 다운로드',
-                    date:'2023.04.13',
-                    password: '더블스윗',
-                    lock: true,
-                    modals: false
-                },
-                {
-                    number: 2,
-                    title:'영인하이텍 APK파일 다운로드',
-                    date:'2023.04.13',
-                    password: '영인',
-                    lock: true,
-                    modals: false
-                },
-                {
-                    number: 3,
-                    title:'SNC APK파일 다운로드',
-                    date:'2023.04.13',
-                    password: 'SNC',
-                    lock: true,
-                    modals: false
-                },
-            ]
-
-        },
-    ])
-
-    const input_pw = ref(null)
-    const inputValue = ref(null)
-    
-  
+    const inputValue = ref(null)  
+    const pwCheckModal = ref(null)
     
     //e = password, f = number
 
     function lockChk(e, f) {
         
-        
         if ( e != null ) {
-        
 
             listPreview.value.map(function(elem) {
                 elem.children[f].modals = true
             })
             console.log(f)    
-            
             
         } else {
             console.log('no password')
@@ -163,8 +122,6 @@
     // g = number
 
     function chkPw(g) {
-
-        console.log(g)
                 
         listPreview.value.map(function(h) {
             let inputPass = inputValue.value[g].value
@@ -177,24 +134,12 @@
                 console.log('ok!')
                 router.push({name: 'DataRoomDetail', params: {id: g}})
             } else {
-                console.log('no!')
                 pwAlert.value = true
             }
         })
 
-    }
-
-    function modalClose(a, b) {
-        let thisElem = a.modals
-        
-        b = false
-        console.log(a)
-        console.log(b)
-        thisElem = !thisElem
-
-        
-    }
-
+    } 
+    
 
 
 </script>
@@ -206,8 +151,6 @@
         @apply w-full border-black border-t-2;
 
     }
-
-   
 
     .table-text {
         @apply grid text-center cursor-pointer;
@@ -269,7 +212,8 @@
         }
 
         [data-pw-check-incorrect] {
-            color: rgb(var(--clr-inter-warn));
+            margin-top:.25rem;
+            color: rgb(var(--clr-inter-error));
         }
     }
 </style>
