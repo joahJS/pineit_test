@@ -116,6 +116,7 @@
             
         } else {
             router.push({name: 'DataRoomDetail', params: {id: f}})
+
         }
     }
 
@@ -133,6 +134,9 @@
             if ( thisPassword == inputPass ) {
                 console.log('ok!')
                 router.push({name: 'DataRoomDetail', params: {id: g}})
+                
+                listPreview.value[0].children[g].modals = false
+
             } else {
                 pwAlert.value = true
             }

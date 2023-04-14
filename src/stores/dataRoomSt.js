@@ -23,7 +23,7 @@ export const useDataRoomStore = defineStore('dataRoom', () => {
                     number: 1,
                     title:'더블스윗 APK파일 다운로드',
                     date:'2023.04.13',
-                    password: 'dbsw',
+                    password: 'db',
                     lock: true,
                     modals: false
                 },
@@ -39,7 +39,7 @@ export const useDataRoomStore = defineStore('dataRoom', () => {
                     number: 3,
                     title:'SNC APK파일 다운로드',
                     date:'2023.04.13',
-                    password: 'SNC',
+                    password: 'snc',
                     lock: true,
                     modals: false
                 },
