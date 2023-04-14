@@ -115,7 +115,7 @@
             console.log(f)    
             
         } else {
-            console.log('no password')
+            router.push({name: 'DataRoomDetail', params: {id: f}})
         }
     }
 
