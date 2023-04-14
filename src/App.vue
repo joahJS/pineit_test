@@ -3,7 +3,7 @@
         <HeadPrimary />
 
         <main id="contentView">
-            <router-view :key="$route.fullPath"></router-view>
+            <router-view :key="$route.path"></router-view>
         </main>
 
         <FootPrimary />
