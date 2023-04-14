@@ -60,7 +60,10 @@ export const useDataRoomStore = defineStore('dataRoom', () => {
             texts: '고객용 원격지원 설치파일 다운로드',
             uploaded: [
                 {fileName:'/public/client.exe', name:'고객용 원격지원 설치파일.exe'}
-            ]
+            ],
+            password: null,
+            lock: false,
+            modals: false
         },
         {
             bindIndex: 1,
@@ -70,7 +73,10 @@ export const useDataRoomStore = defineStore('dataRoom', () => {
             texts: '더블스윗 APK파일을 업로드하오니 업무에 활용바랍니다.',
             uploaded: [
                 {fileName:'/public/더블스윗.apk', name:'더블스윗.apk'},
-            ]
+            ],
+            password: 'dbsw',
+            lock: true,
+            modals: false            
         },
         {
             bindIndex: 2,
@@ -80,7 +86,10 @@ export const useDataRoomStore = defineStore('dataRoom', () => {
             texts: '영인하이텍 APK파일을 업로드하오니 업무에 활용바랍니다.',
             uploaded: [
                 {fileName:'/public/영인하이텍.apk', name:'영인하이텍.apk'},
-            ]
+            ],
+            password: 'yi',
+            lock: true,
+            modals: false
         },
         {
             bindIndex: 3,
@@ -90,7 +99,10 @@ export const useDataRoomStore = defineStore('dataRoom', () => {
             texts: 'SNC APK파일을 업로드하오니 업무에 활용바랍니다.',
             uploaded: [
                 {fileName:'/public/SNC.apk', name:'SNC.apk'},
-            ]
+            ],
+            password: 'SNC',
+            lock: true,
+            modals: false
         },
     ])
 

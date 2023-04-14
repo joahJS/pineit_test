@@ -109,49 +109,7 @@
 
     const getParams = useRoute();
     const getId = parseInt(getParams.params.id)
-    // const dataGroup = ref([
-        
-    //     {
-    //         bindIndex: 0,
-    //         title: '고객용 원격지원 설치파일 다운로드 ',
-    //         date: '2022.11.12',
-    //         views: 175,
-    //         texts: '고객용 원격지원 설치파일 다운로드',
-    //         uploaded: [
-    //             {fileName:'/public/client.exe', name:'고객용 원격지원 설치파일.exe'}
-    //         ]
-    //     },
-    //     {
-    //         bindIndex: 1,
-    //         title: '더블스윗 APK파일 다운로드',
-    //         date: '2023.04.13',
-    //         views: 3,
-    //         texts: '더블스윗 APK파일을 업로드하오니 업무에 활용바랍니다.',
-    //         uploaded: [
-    //             {fileName:'/public/더블스윗.apk', name:'더블스윗.apk'},
-    //         ]
-    //     },
-    //     {
-    //         bindIndex: 2,
-    //         title: '영인하이텍 APK파일 다운로드',
-    //         date: '2023.04.13',
-    //         views: 4,
-    //         texts: '영인하이텍 APK파일을 업로드하오니 업무에 활용바랍니다.',
-    //         uploaded: [
-    //             {fileName:'/public/영인하이텍.apk', name:'영인하이텍.apk'},
-    //         ]
-    //     },
-    //     {
-    //         bindIndex: 3,
-    //         title: 'SNC APK파일 다운로드',
-    //         date: '2023.04.13',
-    //         views: 3,
-    //         texts: 'SNC APK파일을 업로드하오니 업무에 활용바랍니다.',
-    //         uploaded: [
-    //             {fileName:'/public/SNC.apk', name:'SNC.apk'},
-    //         ]
-    //     },
-    // ])
+   
 
     const dataAmount = parseInt(dataGroup.value.length);
     const nextArticle = parseInt(getId + 2);
