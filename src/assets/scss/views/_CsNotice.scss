@@ -123,11 +123,19 @@ input[type=text] {
 
     background: rgba(var(--clr-inter-shade), .05);
 
+    li {
+        &:hover {
+            font-weight: bold;
+        }
+    }
+
     > p{
         @apply mb-1 py-0 font-semibold;
 
         font-family: 'NS-Neo';
         color: rgba(var(--clr-inter-shade), 1);
+
+        
     }
 }
 

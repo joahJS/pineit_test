@@ -100,7 +100,7 @@ export const useDataRoomStore = defineStore('dataRoom', () => {
             uploaded: [
                 {fileName:'/public/SNC.apk', name:'SNC.apk'},
             ],
-            password: 'SNC',
+            password: 'snc',
             lock: true,
             modals: false
         },
