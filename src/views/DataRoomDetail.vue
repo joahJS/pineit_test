@@ -53,12 +53,14 @@
                             <p data-milestone-prev-date>-</p>
                         </div>
                     </a>
-                    <a :href="'/dataroom/' + (getId - 1)" v-else ref="prevLink">
+
+                    <a @click="lockChk(getId - 1)" v-else ref="prevLink">
                         <div id="divMilePrev">
                             <p>이전 글</p>
                             <p data-milestone-prev-title>{{ dataGroup[getId - 1]?.title }}</p>
                             <p data-milestone-prev-date>{{ dataGroup[getId - 1]?.date }}</p>
                         </div>
+                        
                     </a>
 
                     <a href="#" v-if="dataAmount < nextArticle" ref="nextLink">
@@ -68,18 +70,55 @@
                             <p data-milestone-next-date>-</p>
                         </div>
                     </a>
-                    <a :href="'/dataroom/' + (getId + 1)" v-else ref="nextLink">
+                    <a @click="lockChkNext(getId + 1)" v-else ref="prevLink">
+                        <div id="divMilePrev">
+                            <p>다음 글</p>
+                            <p data-milestone-prev-title>{{ dataGroup[getId + 1]?.title }}</p>
+                            <p data-milestone-prev-date>{{ dataGroup[getId + 1]?.date }}</p>
+                        </div>
+                        
+                    </a>
+                    <!-- <a :href="'/dataroom/' + (getId + 1)" v-else ref="nextLink">
                         <div id="divMileNext">
                             <p>다음 글</p>
                             <p data-milestone-next-title>{{ dataGroup[getId + 1]?.title }}</p>
                             <p data-milestone-next-date>{{ dataGroup[getId + 1]?.date }}</p>
                         </div>
-                    </a>
+                    </a> -->
 
                 </div>
             </div>
 
         </article>
+
+        <dialog data-pw-check-modal ref="checkModal">
+            <div data-pw-check-body>
+                <p>비밀번호를 입력해주세요.</p>
+                <p data-pw-check-plzInput v-if="plzInput">비밀번호가 입력되지 않았습니다.</p>
+                <p data-pw-check-incorrect v-if="pwAlert">비밀번호를 다시 확인해주세요.</p>
+                <input type="password" ref="inputValue" @keyup.enter="chkPw(dataGroup[getId - 1].modals)">
+                <div>
+                    <button type="button" @click="chkPw(dataGroup[getId - 1].modals)">확인</button>
+                    
+                    <button type="button" @click="initPw(dataGroup[getId-1].modals), [dataGroup[getId-1].modals = false]">닫기</button>
+                </div>
+            </div>
+        </dialog>
+
+        <dialog data-pw-check-modal ref="checkModalNext">
+            <div data-pw-check-body>
+                <p>비밀번호를 입력해주세요.</p>
+                <p data-pw-check-plzInput v-if="plzInput">비밀번호가 입력되지 않았습니다.</p>
+                <p data-pw-check-incorrect v-if="pwAlert">비밀번호를 다시 확인해주세요.</p>
+                <input type="password" ref="inputValueNext" @keyup.enter="chkPwNext(dataGroup[getId + 1].modals)">
+                <div>
+                    <button type="button" @click="chkPwNext(dataGroup[getId + 1].modals)">확인</button>
+                    
+                    <button type="button" @click="initPw(dataGroup[getId+1].modals), [dataGroup[getId+1].modals = false]">닫기</button>
+                </div>
+            </div>
+        </dialog>
+
         <div class="detail-btm-buttons"><!-- 목록 하단 버튼라인 -->
             <router-link to="/dataroom">
                 <button class="button-white">
@@ -99,6 +138,7 @@
 <script setup>
     import SubPageHero from '@/components/SubPageHero.vue'
     import { useRoute } from 'vue-router'
+    import router from '@/router';
 
     //store에서 영역별 데이터 import
     import { useDataRoomStore } from '@/stores/dataRoomSt'
@@ -117,6 +157,125 @@
 
     const currentArray= dataGroup.value[getId];
     const nextTitle = currentArray["title"];
+
+    //비밀번호체크
+
+    let pwAlert = ref(false)
+    let plzInput = ref(false)
+
+    const inputValue = ref(null)  
+    const inputValueNext = ref(null)
+
+    // const thisMod = ref(dataGroup.value[getId - 1]?.modals)
+
+    const checkModal = ref(null)
+    const checkModalNext = ref(null)
+
+
+    //비밀번호 유무 확인
+    function lockChk(e) {
+        let thisPw = dataGroup.value[getId - 1].password
+        
+
+        
+        console.log(thisPw)
+
+        if ( thisPw != null ) {
+            checkModal.value.showModal()    
+                    
+                 
+            
+        } else {
+            router.push({name: 'DataRoomDetail', params: {id: getId - 1}})
+
+        }
+    }
+
+    function lockChkNext(e) {
+        let thisPw = dataGroup.value[getId + 1].password
+        
+
+        
+        console.log(thisPw)
+
+        if ( thisPw != null ) {
+            checkModalNext.value.showModal()    
+            
+                 
+            
+        } else {
+            router.push({name: 'DataRoomDetail', params: {id: getId + 1}})
+
+        }
+    }
+
+    
+    //비밀번호 맞는지 체크
+    function chkPw(g) {
+                
+        dataGroup.value.map(function(h) {
+            let inputPass = inputValue.value.value
+            let thisPassword = dataGroup.value[getId - 1].password
+
+            if ( thisPassword == inputPass ) {
+                router.push({name: 'DataRoomDetail', params: {id: getId - 1}})
+                
+                dataGroup.value[getId-1].modals = false
+
+            } else if ( inputPass.trim() == '' ) {
+                pwAlert.value = false
+                plzInput.value = true
+                
+            } else if ( inputPass.trim() != '' && thisPassword != inputPass ) {
+                plzInput.value = false
+                pwAlert.value = true
+            }
+        })
+
+    } 
+
+
+    function chkPwNext(g) {
+                
+                dataGroup.value.map(function(h) {
+                    let inputPass = inputValueNext.value.value
+                    let thisPassword = dataGroup.value[getId + 1].password
+        
+                    if ( thisPassword == inputPass ) {
+                        router.push({name: 'DataRoomDetail', params: {id: getId + 1}})
+                        
+                        dataGroup.value[getId-1].modals = false
+        
+                    } else if ( inputPass.trim() == '' ) {
+                        pwAlert.value = false
+                        plzInput.value = true
+                        
+                    } else if ( inputPass.trim() != '' && thisPassword != inputPass ) {
+                        plzInput.value = false
+                        pwAlert.value = true
+                    }
+                })
+        
+            } 
+
+    //비밀번호 확인창 닫기
+    function initPw(e) {
+        console.log(e)
+        //modals를 true > false로 변경하여 모달창 닫기
+        // dataGroup.value[getId-1].modals = false
+        checkModal.value.close()
+        checkModalNext.value.close()
+
+        //경고문구 초기화
+        plzInput.value = false
+        pwAlert.value = false
+
+        //입력한 비번 초기화
+        inputValue.value.value = null
+        inputValueNext.value.value = null
+
+    }
+
 </script>
 
 <style lang="scss" scoped>
@@ -193,5 +352,61 @@
 
     [data-milestone-prev-date], [data-milestone-next-date] {
         @apply text-center;
+    }
+
+    //비밀번호 확인창
+
+       [data-pw-check-modal] {
+        @apply top-0 left-0;
+
+        z-index: 999;
+    }
+
+    [data-pw-check-body] {
+        @apply fixed flex flex-col;
+
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        padding: 1rem 1.25rem;
+        background-color: rgb(var(--clr-inter-pane));
+        filter: drop-shadow(0 0 18px rgba(var(--clr-inter-shade), .15));
+        border: 1px solid rgb(var(--clr-inter-shade));
+        width: 15rem;
+
+        input {
+            border: 1px solid rgb(var(--clr-inter-shade));
+            padding: 0.25rem .25rem .25rem 1.5rem;
+            margin-top: 0.75rem;
+            background-image: url(/public/image/lock-fill.svg);
+            background-position: .35rem;
+            background-repeat: no-repeat;
+        }
+
+        > div {
+            @apply grid w-full;
+
+            margin-top: 1rem;
+            gap: .5rem;
+            grid-template-columns: 1fr 1fr;
+        }
+
+        button {
+            @apply w-full;
+
+            background-color: rgb(var(--clr-inter-shade));
+            padding: .5rem .75rem;
+            color: rgb(var(--clr-inter-pane));
+        }
+
+        [data-pw-check-incorrect] {
+            margin-top:.25rem;
+            color: rgb(var(--clr-inter-error));
+        }
+
+        [data-pw-check-plzInput] {
+            margin-top:.25rem;
+            color: rgb(var(--clr-inter-error));
+        }
     }
 </style>
