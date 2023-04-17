@@ -40,12 +40,12 @@
                     <div v-show="subitem.modals" data-pw-check-modal>
                         <div data-pw-check-body>
                             <p>비밀번호를 입력해주세요.</p>
+                            <p data-pw-check-plzInput v-if="plzInput">비밀번호가 입력되지 않았습니다.</p>
                             <p data-pw-check-incorrect v-if="pwAlert">비밀번호를 다시 확인해주세요.</p>
-                            <!-- <input type="text" ref="inputValue" :value="pwData" @input="pwData = $event.target.value"> -->
-                            <input type="password" ref="inputValue">
+                            <input type="password" ref="inputValue" @keyup.enter="chkPw(subitem.number, subitem.modals)">
                             <div>
                                 <button type="button" @click="chkPw(subitem.number, subitem.modals)">확인</button>
-                                <button type="button" @click="[subitem.modals = !subitem.modals], [pwAlert = false], [inputValue.value = null]">닫기</button>
+                                <button type="button" @click="initPw(subitem.number), [subitem.modals = !subitem.modals]">닫기</button>
                             </div>
                         </div>
                     </div>
@@ -99,6 +99,7 @@
     
 
     let pwAlert = ref(false)
+    let plzInput = ref(false)
 
     const inputValue = ref(null)  
     const pwCheckModal = ref(null)
@@ -137,13 +138,25 @@
                 
                 listPreview.value[0].children[g].modals = false
 
-            } else {
+            } else if ( inputPass.trim() == '' ) {
+                pwAlert.value = false
+                plzInput.value = true
+                
+            } else if ( inputPass.trim() != '' && thisPassword != inputPass ) {
+                plzInput.value = false
                 pwAlert.value = true
             }
         })
 
     } 
     
+    function initPw(e) {
+
+        plzInput.value = false
+        pwAlert.value = false
+        inputValue.value[e].value = null
+        console.log(inputValue.value[e].value)
+    }
 
 
 </script>
@@ -190,13 +203,17 @@
         transform: translate(-50%, -50%);
         padding: 1rem 1.25rem;
         background-color: rgb(var(--clr-inter-pane));
-        filter: drop-shadow(0 0 18px rgba(var(--clr-inter-shade), .05));
+        filter: drop-shadow(0 0 18px rgba(var(--clr-inter-shade), .15));
         border: 1px solid rgb(var(--clr-inter-shade));
+        width: 15rem;
 
         input {
             border: 1px solid rgb(var(--clr-inter-shade));
-            padding: 0.25rem;
+            padding: 0.25rem .25rem .25rem 1.5rem;
             margin-top: 0.75rem;
+            background-image: url(/public/image/lock-fill.svg);
+            background-position: .35rem;
+            background-repeat: no-repeat;
         }
 
         > div {
@@ -216,6 +233,11 @@
         }
 
         [data-pw-check-incorrect] {
+            margin-top:.25rem;
+            color: rgb(var(--clr-inter-error));
+        }
+
+        [data-pw-check-plzInput] {
             margin-top:.25rem;
             color: rgb(var(--clr-inter-error));
         }
