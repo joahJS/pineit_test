@@ -1,0 +1,1 @@
+import{S as t}from"./SubPageHero.0a3d1359.js";import{o,c as n,a,F as s,b as e}from"./index.3ccd0784.js";const r=e("div",{id:"underConstruction",class:"container mt-20 mx-auto"},[e("h2",{class:""},"\uC900\uBE44\uC911\uC778 \uD398\uC774\uC9C0\uC785\uB2C8\uB2E4.")],-1),l={__name:"UnderConstruction",setup(c){return(_,u)=>(o(),n(s,null,[a(t),r],64))}};export{l as default};
