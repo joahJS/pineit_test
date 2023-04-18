@@ -74,7 +74,7 @@ export const useDataRoomStore = defineStore('dataRoom', () => {
             uploaded: [
                 {fileName:'/public/더블스윗.apk', name:'더블스윗.apk'},
             ],
-            password: '2',
+            password: 'db',
             lock: true,
             modals: false            
         },
@@ -87,7 +87,7 @@ export const useDataRoomStore = defineStore('dataRoom', () => {
             uploaded: [
                 {fileName:'/public/영인하이텍.apk', name:'영인하이텍.apk'},
             ],
-            password: '3',
+            password: 'yi',
             lock: true,
             modals: false
         },
@@ -100,7 +100,7 @@ export const useDataRoomStore = defineStore('dataRoom', () => {
             uploaded: [
                 {fileName:'/public/SNC.apk', name:'SNC.apk'},
             ],
-            password: '4',
+            password: 'sn',
             lock: true,
             modals: false
         },

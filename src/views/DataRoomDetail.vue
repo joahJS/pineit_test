@@ -33,7 +33,7 @@
                 </div>
                 <div id="divDetailText"><!-- 본문영역 -->
                     <p v-if="pwChkComplete">{{ dataGroup[getId]?.texts }}</p>
-                    <p v-else>비밀번호 입력 후 개방됩니다.</p>
+                    <p v-else>글 내용은 비밀번호 입력 후 확인하실 수 있습니다.</p>
 
                     <div id="divUploadedFiles">
                         <p>Uploaded file list</p>
@@ -41,7 +41,7 @@
                             <li data-uploaded-file v-for="link in dataGroup[getId]?.uploaded">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="12" height="12"><path fill="none" d="M0 0h24v24H0z"/><path d="M9 2.003V2h10.998C20.55 2 21 2.455 21 2.992v18.016a.993.993 0 0 1-.993.992H3.993A1 1 0 0 1 3 20.993V8l6-5.997zM5.83 8H9V4.83L5.83 8zM11 4v5a1 1 0 0 1-1 1H5v10h14V4h-8z"/></svg>
                                 <p v-if="pwChkComplete"><a :href="link.fileName">{{ link.name }}</a></p>
-                                <p v-else>비밀번호 입력 후 개방됩니다.</p>
+                                <p v-else>첨부파일은 비밀번호 입력 후 확인하실 수 있습니다.</p>
                             </li>
 
                         </ul>
@@ -138,7 +138,6 @@
     const currentArray= dataGroup.value[getId];
 
     const checkModal = ref(null)
-    // const nextTitle = currentArray["title"];
 
     //입장시 비밀번호 체크
 
@@ -152,27 +151,19 @@
             pwChkComplete.value = true
         }
     })
-
-    //비밀번호체크
-
-    console.log('아이디는' + getId)
+ 
+    
+    //비밀번호 체크 함수
 
     let pwAlert = ref(false)
     let plzInput = ref(false)
 
     const inputValue = ref(null)  
 
-    // const thisMod = ref(dataGroup.value[getId - 1]?.modals)
-
-    
-    
-    //비밀번호 맞는지 체크
     function chkPw(g) {
         let inputPass = inputValue.value.value
         let thisPassword = dataGroup.value[getId].password
 
-        console.log(inputPass)
-        console.log(thisPassword)
 
         if ( thisPassword == inputPass ) {
                 pwChkComplete.value = true
@@ -187,14 +178,12 @@
                 plzInput.value = false
                 pwAlert.value = true
         }
-                
 
     } 
 
     //비밀번호 확인창 닫기
     function initPw(e) {
-        //modals를 true > false로 변경하여 모달창 닫기
-        // dataGroup.value[getId-1].modals = false
+
         checkModal.value.close()
 
         //경고문구 초기화
@@ -203,13 +192,17 @@
 
         //입력한 비번 초기화
         inputValue.value.value = null
-
     }
 
 
 </script>
 
 <style lang="scss" scoped>
+
+    *:focus {
+        outline: 0;
+    }
+
     #divDataRoomDetail {
         @apply w-full border-black border-t-2;
     }
@@ -308,7 +301,7 @@
         input {
             border: 1px solid rgb(var(--clr-inter-shade));
             padding: 0.25rem .25rem .25rem 1.5rem;
-            margin-top: 0.75rem;
+            margin-top: 1rem;
             background-image: url(/public/image/lock-fill.svg);
             background-position: .35rem;
             background-repeat: no-repeat;
