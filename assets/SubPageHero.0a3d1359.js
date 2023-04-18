@@ -1,1 +1,0 @@
-import{_ as s,o as t,c as _,b as e,r}from"./index.3ccd0784.js";const c={},n={id:"tempSubPageHero"},d={id:"divHeroSubline"},a={id:"ulBreadCrumbs"};function i(o,u){return t(),_("div",n,[e("div",d,[e("ul",a,[e("li",null,[r(o.$slots,"routeName",{},void 0,!0)])])])])}const b=s(c,[["render",i],["__scopeId","data-v-bc997640"]]);export{b as S};
