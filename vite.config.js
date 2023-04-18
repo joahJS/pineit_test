@@ -11,7 +11,7 @@ export default defineConfig({
         }
     },
     build: {},
-    base: '/pineit_test/',
+    
 
     historyApiFallback: true,
 })

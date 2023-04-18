@@ -3,11 +3,7 @@ import Main from '@/views/Main.vue'
 
 
 const routes = [
-    { 
-        path: '/pineit_test/', 
-        name: 'testMain', 
-        component: Main 
-    },
+
     {
         path: '/',
         name: 'Main',

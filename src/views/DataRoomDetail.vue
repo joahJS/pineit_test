@@ -1,7 +1,7 @@
 <template>
     <SubPageHero />
 
-    <section v-if="pwChkComplete" class="container div-main-text">
+    <section class="container div-main-text">
 
         <div id="divSearchLine">
             <select data-totalsearch-select>
@@ -32,14 +32,16 @@
                     </div>
                 </div>
                 <div id="divDetailText"><!-- 본문영역 -->
-                    <p>{{ dataGroup[getId]?.texts }}</p>
+                    <p v-if="pwChkComplete">{{ dataGroup[getId]?.texts }}</p>
+                    <p v-else>비밀번호 입력 후 개방됩니다.</p>
 
                     <div id="divUploadedFiles">
                         <p>Uploaded file list</p>
                         <ul data-uploaded-list>
                             <li data-uploaded-file v-for="link in dataGroup[getId]?.uploaded">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="12" height="12"><path fill="none" d="M0 0h24v24H0z"/><path d="M9 2.003V2h10.998C20.55 2 21 2.455 21 2.992v18.016a.993.993 0 0 1-.993.992H3.993A1 1 0 0 1 3 20.993V8l6-5.997zM5.83 8H9V4.83L5.83 8zM11 4v5a1 1 0 0 1-1 1H5v10h14V4h-8z"/></svg>
-                                <p><a :href="link.fileName">{{ link.name }}</a></p>
+                                <p v-if="pwChkComplete"><a :href="link.fileName">{{ link.name }}</a></p>
+                                <p v-else>비밀번호 입력 후 개방됩니다.</p>
                             </li>
 
                         </ul>
