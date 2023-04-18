@@ -25,7 +25,7 @@
             </div>
 
             <div v-for="(item, index) in listPreview.slice().reverse()" id="divTextLines" :key="index">
-                <div v-for="subitem in item.children">
+                <div v-for="subitem in item.children" data-board-title-line>
                     <div @click="lockChk(subitem.password, subitem.number)">
                     <!-- <router-link :to="{name: 'DataRoomDetail', params: {id: subitem.number}}"> -->
                         <div class="table-text">

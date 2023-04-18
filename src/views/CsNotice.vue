@@ -23,16 +23,17 @@
                 <div>제목</div>
                 <div>등록일</div>
             </div>
-
-            <div v-for="subitem in item.children.slice().reverse()" id="divTextLines"> <!--916- 글 목록 -->
-                <router-link :to="{name: 'NoticeDetail', params: {id: subitem.number}}"><!-- 글 한줄 시작 -->
-                    <div class="table-text">
-                        <div> {{ subitem.number + 1 }} </div>
-                        <div class="board-titles-div">{{ subitem.title }}</div>
-                        <div> {{ subitem.date }} </div>
-                    </div>
-                </router-link><!-- 글 한줄 끝 -->
-               
+            <div id="divTextLines">
+                <div v-for="subitem in item.children.slice().reverse()" data-board-title-line> <!--916- 글 목록 -->
+                    <router-link :to="{name: 'NoticeDetail', params: {id: subitem.number}}"><!-- 글 한줄 시작 -->
+                        <div class="table-text">
+                            <div> {{ subitem.number + 1 }} </div>
+                            <div class="board-titles-div">{{ subitem.title }}</div>
+                            <div> {{ subitem.date }} </div>
+                        </div>
+                    </router-link><!-- 글 한줄 끝 -->
+                
+                </div>
             </div>
 
         </div>

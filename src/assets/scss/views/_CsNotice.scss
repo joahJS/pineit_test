@@ -231,7 +231,7 @@ input[type=text] {
 }
 
 .table-text {
-    @apply grid text-center cursor-pointer;
+    @apply grid text-center cursor-pointer font-bold;
 
     grid-template-columns: 6rem 1fr 10rem;
     border-bottom: 1px solid rgba(0,0,0, .15);
@@ -249,9 +249,17 @@ input[type=text] {
     @apply text-start px-2;
 }
 
+[data-board-title-line]:hover {
+    background-color: rgba(var(--clr-id-main), .035);
+}
+
 #divMileStone {
     > div {
          grid-template-columns: 3rem 1fr 4rem !important;
+    }
+
+    > a:hover {
+        background-color: rgba(var(--clr-id-main), .035);
     }
 }
 
